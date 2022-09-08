@@ -21,7 +21,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#lastName').should('be.visible').type('Borges')
         cy.get('#email').should('be.visible').type('interdjonatas@gmail.com')
         cy.get('#open-text-area').should('be.visible').type('VERIFICANDO SE O TESTE ESTA DIGITANDO TUDO.', {delay: 0})
-        cy.get('.button').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.success').should('be.visible')
     })
 
@@ -30,7 +30,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#lastName').should('be.visible').type('Borges')
         cy.get('#email').should('be.visible').type('interdjonatas$gmail.com')
         cy.get('#open-text-area').should('be.visible').type('VERIFICANDO SE O TESTE ESTA DIGITANDO TUDO.', {delay: 0})
-        cy.get('.button').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
     })
     it('campo telefone permanece vazio quando preenchido com valor não numérico', function() {   
@@ -43,7 +43,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#email').should('be.visible').type('interdjonatas$gmail.com', {delay: 0})
         cy.get('#open-text-area').should('be.visible').type('VERIFICANDO SE O TESTE ESTA DIGITANDO TUDO.', {delay: 0})
         cy.get('#phone-checkbox').check()
-        cy.get('.button').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
     })
     it('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
@@ -53,14 +53,23 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#email').should('be.visible').type('interdjonatas$gmail.com', {delay: 0})
         cy.get('#open-text-area').should('be.visible').type('VERIFICANDO SE O TESTE ESTA DIGITANDO TUDO.', {delay: 0})
         cy.get('#phone-checkbox').check()
-        cy.get('.button').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
     })
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function(){
-        cy.get('.button').click()
+        cy.contains('button', 'Enviar').click()
         cy.get('.error').should('be.visible')
     })
     it('envia o formuário com sucesso usando um comando customizado', function(){
         cy.fillMandatoryFieldsAndSubmit()
+    })
+    it('seleciona um produto (YouTube) por seu texto', function (){
+        cy.get('#product').select('YouTube').should('have.value', 'YouTube'.toLowerCase())
+    })
+    it('seleciona um produto (Mentoria) por seu valor', function (){
+        cy.get('#product').select('Mentoria'.toLowerCase()).should('have.value', 'mentoria')
+    })
+    it('seleciona um produto (Blog) por seu índice', function (){
+        cy.get('#product').select(1)
     })
 })
