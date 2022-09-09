@@ -76,10 +76,20 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('input[value="feedback"]')
             .check().should('have.value', 'feedback')
     })
-    it.only('marca cada tipo de atendimento', function() {
+    it('marca cada tipo de atendimento', function() {
         cy.get('input[name="atendimento-tat"]')
             .each(function($radio){
                 cy.wrap($radio).check().should('be.checked')
             })
+    })
+    it.only('marca ambos checkboxes, depois desmarca o último', function(){
+        // Usando each e wrap no checkbox
+        // cy.get('input[type="checkbox"]')
+        //     .each(function($checkbox){
+        //         cy.wrap($checkbox).check().should('be.checked')
+        //         .uncheck().should('not.be.checked')
+        //     })
+        cy.get('input[type="checkbox"]').check().should('be.checked')
+            .last().uncheck().should('not.be.checked')
     })
 })
